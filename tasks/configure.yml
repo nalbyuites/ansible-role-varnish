@@ -7,6 +7,20 @@
 
 ---
 
+- name: 'Varnish | Create Varnish PID directory.'
+  become: yes
+  file:
+    path: '/var/run/varnish'
+    state: 'directory'
+    owner: 'varnish'
+    group: 'varnish'
+    mode: '0755'
+
+- name: 'Varnish | Change PID file path for Varnish in CentOS 6 init script.'
+  become: yes
+  lineinfile: dest=/etc/init.d/varnish regexp='^pidfile=' line='pidfile=/var/run/varnish/varnish.pid'
+  when: '{{ ansible_os_family == "RedHat" and ansible_distribution_major_version|int < 7 }}'
+
 - name: 'Varnish | Configure service init file.'
   become: yes
   template:
@@ -38,14 +52,9 @@
     group: 'root'
     mode: '0755'
 
-- name: 'Varnish | Configure ownership of pid directory.'
+- name: 'Varnish | Configure secret file.'
   become: yes
-  file:
-    path: '/var/run/varnish'
-    state: 'directory'
-    owner: 'varnish'
-    group: 'varnish'
-    mode: '0755'
+  command: dd if=/dev/random of='{{ varnish_config_path }}/secret' count=1
 
 - name: 'Varnish | Configure default VCL.'
   become: yes
@@ -58,7 +67,13 @@
   when: '{{ varnish_use_default_vcl }}'
   notify: 'restart varnish'
 
-- name: 'Varnish | Configure secret file.'
+- name: 'Varnish | Configure iptables for Varnish on CentOS.'
   become: yes
-  command: dd if=/dev/random of='{{ varnish_config_path }}/secret' count=1
-  notify: 'restart varnish'
+  template:
+    src: '{{ varnish_iptables_template }}'
+    dest: '/etc/sysconfig/iptables'
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+  when: yes
+  notify: 'restart iptables'
