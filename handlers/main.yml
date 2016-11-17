@@ -17,3 +17,10 @@
     name: '{{ varnish_service_name }}'
     state: 'restarted'
   when: '{{ varnish_service_enabled }}'
+
+- name: 'restart iptables'
+  become: yes
+  service:
+    name: 'iptables'
+    state: 'restarted'
+  when: yes

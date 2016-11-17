@@ -13,3 +13,10 @@
     name: '{{ varnish_service_name }}'
     state: '{{ varnish_service_state }}'
     enabled: '{{ varnish_service_enabled }}'
+
+- name: 'IPtables | Restart IPtables service.'
+  become: yes
+  service:
+    name: 'iptables'
+    state: 'restarted'
+    enabled: yes
