@@ -10,7 +10,7 @@
 - name: 'Varnish | Create Varnish PID directory.'
   become: yes
   file:
-    path: '/var/run/varnish'
+    path: '{{ varnish_pid_path }}'
     state: 'directory'
     owner: 'varnish'
     group: 'varnish'
@@ -18,7 +18,7 @@
 
 - name: 'Varnish | Change PID file path for Varnish in CentOS 6 init script.'
   become: yes
-  lineinfile: dest=/etc/init.d/varnish regexp='^pidfile=' line='pidfile=/var/run/varnish/varnish.pid'
+  lineinfile: dest=/etc/init.d/varnish regexp='^pidfile=' line='pidfile={{ varnish_pid_path }}/varnish.pid'
   when: '{{ ansible_os_family == "RedHat" and ansible_distribution_major_version|int < 7 }}'
 
 - name: 'Varnish | Configure service init file.'
