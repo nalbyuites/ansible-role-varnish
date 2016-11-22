@@ -41,7 +41,7 @@
     dest: '{{ varnish_system_config_path }}'
     owner: 'root'
     group: 'root'
-    mode: '0644'
+    mode: '0755'
 
 - name: 'Varnish | Configure ownership of configuration directory.'
   become: yes
