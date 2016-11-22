@@ -71,7 +71,7 @@
   become: yes
   template:
     src: '{{ varnish_iptables_template }}'
-    dest: '/etc/sysconfig/iptables'
+    dest: '{{ default_system_config_path }}/iptables'
     owner: 'root'
     group: 'root'
     mode: '0644'
