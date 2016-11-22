@@ -10,6 +10,8 @@
 varnish_default_packages:
   - name: 'varnish'
   - name: 'varnish-agent'
+  - name: 'mailx'
+  - name: 'cyrus-sasl-*'
 
 varnish_default_service_name: 'varnish'
 varnish_default_system_config_template: 'varnish.j2'
