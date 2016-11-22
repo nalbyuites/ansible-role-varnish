@@ -87,6 +87,7 @@
   git:
     repo: https://github.com/brandonwamboldt/varnish-dashboard.git
     dest: '{{ varnish_dashboard_path }}'
+  ignore_errors: yes
 
 - name: 'Varnish Agent | Configure Dashboard configuration file.'
   become: yes
