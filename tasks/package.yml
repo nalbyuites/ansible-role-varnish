@@ -58,7 +58,7 @@
   yum:
     name: '{{ item.name if item.version is not defined else item.name + "-" + item.version }}'
     conf_file: '{{ item.conf_file | default(omit) }}'
-    disable_gpg_check: '{{ item.disable_gpg_check | default(omit) }}'
+    disable_gpg_check: '{{ item.disable_gpg_check | default(1) }}'
     disablerepo: '{{ item.disablerepo | default(omit) }}'
     enablerepo: '{{ item.enablerepo | default(varnish_yum_enablerepo) }}'
     exclude: '{{ item.exclude | default(omit) }}'
