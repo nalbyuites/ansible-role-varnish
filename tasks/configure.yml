@@ -87,3 +87,12 @@
   git:
     repo: https://github.com/brandonwamboldt/varnish-dashboard.git
     dest: '{{ varnish_dashboard_path }}'
+
+- name: 'Varnish Agent | Configure Dashboard configuration file.'
+  become: yes
+  template:
+    src: '{{ varnish_dashboard_template }}'
+    dest: '{{ varnish_dashboard_path }}/config.js'
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
