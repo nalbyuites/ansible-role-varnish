@@ -20,3 +20,10 @@
     name: 'iptables'
     state: 'restarted'
     enabled: yes
+
+- name: 'Varnish Agent | Enable Varnish Agent service.'
+  become: yes
+  service:
+    name: 'varnish-agent'
+    state: 'restarted'
+    enabled: yes
