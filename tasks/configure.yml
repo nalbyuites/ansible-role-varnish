@@ -81,3 +81,9 @@
 - name: 'Varnish Agent | Generate random password'
   become: yes
   shell: echo varnish:`tr -d -c "a-zA-Z0-9-%^&*()_+~" < /dev/urandom | head -c 20` > '{{ varnish_agent_secret_file }}'
+
+- name: 'Varnish Agent | Install Dashboard'
+  become: yes
+  git:
+    repo: https://github.com/brandonwamboldt/varnish-dashboard.git
+    dest: '{{ varnish_dashboard_path }}'

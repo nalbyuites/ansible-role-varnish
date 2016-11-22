@@ -17,6 +17,8 @@ varnish_service_template:
 varnish_system_config_template:
 varnish_system_config_path:
 varnish_config_path: '/etc/varnish'
+varnish_dashboard_path: '/var/www/varnish-dashboard'
+varnish_dashboard_template: 'config.js.j2'
 varnish_use_default_vcl: yes
 varnish_default_vcl_template: 'default.vcl.j2'
 varnish_listen_address: '0.0.0.0'
