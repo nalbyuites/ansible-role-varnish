@@ -82,6 +82,15 @@
   become: yes
   shell: echo varnish:`tr -d -c "a-zA-Z0-9-%^&*()_+~" < /dev/urandom | head -c 20` > '{{ varnish_agent_secret_file }}'
 
+- name: 'Varnish Agent | Configuration file'
+  become: yes
+  template:
+    src: '{{ varnish_dashboard_template }}'
+    dest: '{{ varnish_dashboard_path }}/config.js'
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+
 - name: 'Varnish Agent | Install Dashboard'
   become: yes
   git:
@@ -92,8 +101,8 @@
 - name: 'Varnish Agent | Configure Dashboard configuration file.'
   become: yes
   template:
-    src: '{{ varnish_dashboard_template }}'
-    dest: '{{ varnish_dashboard_path }}/config.js'
+    src: '{{ varnish_agent_default_system_config_template }}'
+    dest: '{{ varnish_agent_default_system_config_path }}'
     owner: 'root'
     group: 'root'
     mode: '0644'
