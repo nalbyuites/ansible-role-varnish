@@ -27,3 +27,10 @@
     name: 'varnish-agent'
     state: 'restarted'
     enabled: yes
+
+- name: 'varnishncsa | Enable varnishncsa service for logging.'
+  become: yes
+  service:
+    name: 'varnishncsa'
+    state: 'restarted'
+    enabled: yes
