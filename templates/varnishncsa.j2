@@ -1,0 +1,6 @@
+# Default log format
+# LOG_FORMAT="%h %l %u %t "%r" %s %b "%{Referer}i" "%{User-agent}i""
+
+LOG_FORMAT="%{X-Forwarded-For}i %l %u %t \"%r\" %s %b \"%{Referer}i\" \"%{User-agent}i\" %{Varnish:time_firstbyte}x"
+
+DAEMON_OPTS="-c -a -w $logfile -D -P $pidfile -F '${LOG_FORMAT}'"

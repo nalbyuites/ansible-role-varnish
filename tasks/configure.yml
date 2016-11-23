@@ -106,3 +106,12 @@
     owner: 'root'
     group: 'root'
     mode: '0644'
+
+- name: 'Varnishncsa | Enable logging with custom format.'
+  become: yes
+  template:
+    src: '{{ varnishncsa_system_config_template }}'
+    dest: '{{ default_system_config_path }}/varnishncsa'
+    owner: 'root'
+    group: 'root'
+    mode: '0755'
