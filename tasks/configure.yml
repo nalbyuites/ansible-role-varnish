@@ -18,7 +18,10 @@
 
 - name: 'Varnish | Change PID file path for Varnish in CentOS 6 init script.'
   become: yes
-  lineinfile: dest=/etc/init.d/varnish regexp='^pidfile=' line='pidfile={{ varnish_pid_path }}/varnish.pid'
+  lineinfile:
+    dest: /etc/init.d/varnish
+    regexp: '^pidfile='
+    line: 'pidfile={{ varnish_pid_path }}/varnish.pid'
   when: '{{ ansible_os_family == "RedHat" and ansible_distribution_major_version|int < 7 }}'
 
 - name: 'Varnish | Configure service init file.'
@@ -80,7 +83,7 @@
 
 - name: 'Varnish Agent | Generate random password'
   become: yes
-  shell: echo varnish:`tr -d -c "a-zA-Z0-9-%^&*()_+~" < /dev/urandom | head -c 20` > '{{ varnish_agent_secret_file }}'
+  shell: echo varnish:`tr -d -c "a-zA-Z0-9-%^&*()_+~" < /dev/urandom | head -c 30` > '{{ varnish_agent_secret_file }}'
 
 - name: 'Varnish Agent | Configuration file'
   become: yes
