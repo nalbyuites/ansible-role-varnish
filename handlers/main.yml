@@ -24,3 +24,10 @@
     name: 'iptables'
     state: 'restarted'
   when: yes
+
+- name: 'restart sshd'
+  become: yes
+  service:
+    name: 'sshd'
+    state: 'restarted'
+  when: yes
