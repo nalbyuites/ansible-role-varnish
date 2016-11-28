@@ -18,7 +18,7 @@
   become: yes
   service:
     name: 'iptables'
-    state: 'restarted'
+    state: 'started'
     enabled: yes
 
 - name: 'Varnish Agent | Enable Varnish Agent service.'
@@ -33,4 +33,11 @@
   service:
     name: 'varnishncsa'
     state: 'restarted'
+    enabled: yes
+
+- name: 'SSH | Enable SSH service.'
+  become: yes
+  service:
+    name: 'sshd'
+    state: 'started'
     enabled: yes
