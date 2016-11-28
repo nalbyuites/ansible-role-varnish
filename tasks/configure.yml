@@ -118,3 +118,46 @@
     owner: 'root'
     group: 'root'
     mode: '0755'
+
+- name: 'Sudo | Make sure we have a wheel group.'
+  group:
+    name: wheel
+    state: present
+
+- name: 'Sudo | Allow wheel group to have passwordless sudo.'
+  lineinfile:
+    dest: /etc/sudoers
+    state: present
+    regexp: '^%wheel'
+    line: '%wheel ALL=(ALL) NOPASSWD: ALL'
+
+- name: 'Sudo | Add a non-root user in group wheel.'
+  become: yes
+  user:
+    name: '{{ ssh_nonroot_user }}'
+    shell: '/bin/bash'
+    home: '/home/{{ ssh_nonroot_user }}'
+    groups: 'wheel'
+    append: 'yes'
+    state: 'present'
+
+- name: 'SSH | Use previously generated dashboard password.'
+  set_fact:
+    # Could not use a variable within another. Needs a re-look to avoid specifying the file directly.
+    ssh_pass: "{{ lookup('csvfile', 'varnish file=/etc/varnish/agent_secret delimiter=:') }}"
+
+- name: 'SSH | Set password for the non-root user.'
+  become: yes
+  shell: echo -e "{{ ssh_pass }}\n{{ ssh_pass }}" | passwd '{{ ssh_nonroot_user }}'
+
+- name: 'SSH | Set password for root user.'
+  become: yes
+  shell: echo -e "{{ ssh_pass }}\n{{ ssh_pass }}" | passwd
+
+- name: 'SSH | Allow password-based SSH access.'
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    state: present
+    regexp: '^PasswordAuthentication'
+    line: 'PasswordAuthentication yes'
+  notify: 'restart sshd'
