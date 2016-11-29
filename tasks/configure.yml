@@ -83,7 +83,7 @@
 
 - name: 'Varnish Agent | Generate random password'
   become: yes
-  shell: echo varnish:`tr -d -c "a-zA-Z0-9-%^&*()_+~" < /dev/urandom | head -c 30` > '{{ varnish_agent_secret_file }}'
+  shell: echo e2e-user:`tr -d -c "a-zA-Z0-9-%^&*()_+~" < /dev/urandom | head -c 30` > '{{ varnish_agent_secret_file }}'
 
 - name: 'Varnish Agent | Install Dashboard'
   become: yes
