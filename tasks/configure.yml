@@ -143,8 +143,8 @@
 
 - name: 'SSH | Use previously generated dashboard password.'
   set_fact:
-    # Could not use a variable within another. Needs a re-look to avoid specifying the file directly.
-    ssh_pass: "{{ lookup('csvfile', 'varnish file=/etc/varnish/agent_secret delimiter=:') }}"
+    # Could not use a variable within another. Needs a re-look to avoid specifying the user key and file directly.
+    ssh_pass: "{{ lookup('csvfile', 'e2e-user file=/etc/varnish/agent_secret delimiter=:') }}"
 
 - name: 'SSH | Set password for the non-root user.'
   become: yes
