@@ -161,3 +161,11 @@
     regexp: '^PasswordAuthentication'
     line: 'PasswordAuthentication yes'
   notify: 'restart sshd'
+
+- name: 'SSH | Disable root login.'
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    state: present
+    regexp: '^PermitRootLogin'
+    line: 'PermitRootLogin no'
+  notify: 'restart sshd'
