@@ -40,6 +40,7 @@ varnish_daemon_options:
   - 'vcc_allow_inline_c=on'
   - 'workspace_backend=64k'
   - 'feature=+esi_ignore_other_elements'
+ssh_nonroot_user: 'e2e-user'
 varnish_listen_port: '80'
 varnish_default_backend_host: '172.16.88.99'
 varnish_default_backend_port: '9090'
