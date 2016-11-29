@@ -148,11 +148,11 @@
 
 - name: 'SSH | Set password for the non-root user.'
   become: yes
-  shell: echo -e "{{ ssh_pass }}\n{{ ssh_pass }}" | passwd '{{ ssh_nonroot_user }}'
+  shell: echo -e "'{{ ssh_pass }}'\n'{{ ssh_pass }}'" | tr -d "'" | passwd '{{ ssh_nonroot_user }}'
 
 - name: 'SSH | Set password for root user.'
   become: yes
-  shell: echo -e "{{ ssh_pass }}\n{{ ssh_pass }}" | passwd
+  shell: echo -e "'{{ ssh_pass }}'\n'{{ ssh_pass }}'" | tr -d "'" | passwd
 
 - name: 'SSH | Allow password-based SSH access.'
   lineinfile:
